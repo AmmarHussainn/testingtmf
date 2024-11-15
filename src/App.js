@@ -163,11 +163,12 @@ function App() {
         <Route path='/otp' element={<OTP />} />
         <Route path='/resetpassword-two' element={<ResetPassword_Two />} />
         <Route path='/congratulations' element={<Congratulations />} />
-
         <Route
           path=':id/dashboard'
           element={
-            isAuthenticated() ? <DashboardLayout /> : <Navigate to='/login' />
+            // isAuthenticated() ? 
+            <DashboardLayout />
+            //  : <Navigate to='/login' />
           }
         >
           <Route path='home' element={<Dashboard_Home />} />

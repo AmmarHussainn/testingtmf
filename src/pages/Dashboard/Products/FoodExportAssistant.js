@@ -494,7 +494,7 @@ export const FoodExportAssistant = () => {
                               <img
                                 src={
                                   process.env.PUBLIC_URL +
-                                  '/images/aiAvatar.png'
+                                  '/images/AIAvatar.png'
                                 }
                                 alt='AI Avatar'
                               />
