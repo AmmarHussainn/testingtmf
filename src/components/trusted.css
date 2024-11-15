@@ -1,0 +1,24 @@
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+
+}
+
+.marquee {
+  display: flex;
+  width: 200%;
+  animation: marquee 20s linear infinite;
+}
+
+.marquee-item {
+  flex: 0 0 auto;
+  width: 140px;
+  height : 100px ; /* Adjust based on your image size */
+  margin-right: 10px; /* Adjust spacing between images */
+  object-fit: contain;
+}
