@@ -360,7 +360,7 @@ export const FoodExportAssistant = () => {
                           conversation: item,
                         });
                       }}
-                      className='flex gap-3 justify-between items-center'
+                      className='flex gap-3 justify-between hover:font-bold items-center'
                     >
                       <div className='w-[18px] h-[16px] '>
                         <img
