@@ -44,11 +44,14 @@ export const FoodExportAssistant = () => {
           for (const element of responses) {
             let oneConversation = [];
             for (let i = 0; i < element?.messages?.length - 1; i += 2) {
+              console.log('element', element);
+
               oneConversation.push({
                 conversationId: element.conversationId,
                 conversation: {
                   question: element?.messages[i].content,
                   answer: element?.messages[i + 1].content,
+                  citations: element?.messages[i + 1].citations,
                 },
               });
             }
@@ -159,7 +162,8 @@ export const FoodExportAssistant = () => {
           for (let i = 0; i < allConversations.length; i++) {
             if (
               allConversations[i][0]?.conversationId ==
-              (response?.data?.conversationId || currentConversation?.conversationId)
+              (response?.data?.conversationId ||
+                currentConversation?.conversationId)
             ) {
               idFounded = true;
               let newConv = [...allConversations];
@@ -173,19 +177,20 @@ export const FoodExportAssistant = () => {
               setAllConversation([...newConv]);
             }
           }
-          if(!idFounded){
-              let newConv = [...allConversations];
-              newConv.push([{
+          if (!idFounded) {
+            let newConv = [...allConversations];
+            newConv.push([
+              {
                 conversationId: response?.data?.conversationId,
                 conversation: {
                   question: response?.data?.question,
                   response: response?.data?.response,
                 },
-              }]);
-              setAllConversation([...newConv]);
-            
+              },
+            ]);
+            setAllConversation([...newConv]);
           }
-        }else{
+        } else {
           let newConv = [[]];
           newConv[0][0] = {
             conversationId: response?.data?.conversationId,
@@ -342,27 +347,31 @@ export const FoodExportAssistant = () => {
               : allConversations.map((item, idx) => (
                   <div
                     key={idx}
-                    className={`flex w-[85%] ml-auto mr-auto justify-start items-center gap-3  mt-3 mb-3 p-3 pl-4 pr-4 rounded-xl cursor-pointer hover:bg-slate-50 ${
+                    className={`flex w-[85%] ml-auto mr-auto justify-between items-center gap-2  mt-3 mb-3 p-3 pl-4 pr-4 rounded-xl cursor-pointer hover:bg-slate-50 ${
                       currentConversation?.conversationId ==
                         item[0].conversationId && 'bg-[#EAE9F7]'
                     }`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setCurrentConversation({
-                        conversationId: item[0].conversationId,
-                        conversation: item,
-                      });
-                    }}
                   >
-                    <div className='w-[18px] h-[16px] '>
-                      <img
-                        src={process.env.PUBLIC_URL + '/images/chatIcon.png'}
-                        alt='Chat Icon'
-                        className='w-[18px] h-[16px]'
-                      />
-                    </div>
-                    <div className='font-Poppins text-[14px] w-[75%] truncate text-[#00000066] shadow-inset-right-white'>
-                      {item[0].conversation.question}
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentConversation({
+                          conversationId: item[0].conversationId,
+                          conversation: item,
+                        });
+                      }}
+                      className='flex gap-3 justify-between items-center'
+                    >
+                      <div className='w-[18px] h-[16px] '>
+                        <img
+                          src={process.env.PUBLIC_URL + '/images/chatIcon.png'}
+                          alt='Chat Icon'
+                          className='w-[18px] h-[16px]'
+                        />
+                      </div>
+                      <div className='font-Poppins text-[14px] w-[75%] truncate text-[#00000066] shadow-inset-right-white'>
+                        {item[0].conversation.question}
+                      </div>
                     </div>
                     <div
                       onClick={(e) => {
@@ -501,43 +510,69 @@ export const FoodExportAssistant = () => {
                             </div>
 
                             <div className='p-3 shadow-[4px_-2px_46px_0px_rgba(0,_0,_0,_0.1)] flex  flex-col justify-between rounded-xl w-calc-100-minus-100'>
-                              {item?.conversation?.response?.citations?.length >
-                                0 && (
-                                <div className=' w-[100%] flex gap-2  mb-6 flex-wrap '>
-                                  {item?.conversation?.response?.citations?.map(
-                                    (items, idx) => {
-                                      return (
-                                        <>
-                                          <div
-                                            index={idx}
-                                            onClick={() => {
-                                              window.open(items, '_blank');
-                                            }}
-                                            className='w-[150px] h-[100px] font-bold border cursor-pointer overflow-hidden rounded-xl'
-                                          >
-                                            <div className='w-full flex justify-center p-2'>
-                                              <img
-                                                className='w-[28px] h-[28px]'
-                                                src={getDomainInfo(items).icon}
-                                              />
-                                            </div>
-                                            <h3 className='font-bold text-[14px] w-full text-center p-2 break-words pt-0'>
-                                              {getDomainInfo(items).domain}
-                                            </h3>
+                              {(item?.conversation?.response?.citations
+                                ?.length > 0 ||
+                                item?.conversation?.citations?.length > 0) && (
+                                <div className=' w-[100%] flex justify-start gap-4  mb-6 flex-wrap '>
+                                  {(
+                                    item?.conversation?.response?.citations ||
+                                    item?.conversation?.citations
+                                  ).map((items, idx) => {
+                                    return (
+                                      <>
+                                        <div
+                                          index={idx}
+                                          onClick={() => {
+                                            window.open(items, '_blank');
+                                          }}
+                                          className='transition-transform transform hover:scale-105 hover:shadow-lg w-[23%] h-[100px] font-bold border cursor-pointer overflow-hidden rounded-xl'
+                                        >
+                                          <div className='w-full flex justify-center p-2'>
+                                            <img
+                                              className='w-[28px] h-[28px]'
+                                              src={getDomainInfo(items).icon}
+                                            />
                                           </div>
-                                        </>
-                                      );
-                                    }
-                                  )}
+                                          <h3 className='font-bold text-[14px] w-full text-center p-2 break-words pt-0'>
+                                            {getDomainInfo(items).domain}
+                                          </h3>
+                                        </div>
+
+                                        {/* <a
+                                          href={items}
+                                          target='_blank'
+                                          class='group w-64 h-32 bg-gray-100 border border-gray-300 rounded-lg shadow-md flex items-center p-4 transition-transform transform hover:scale-105 hover:shadow-lg'
+                                        >
+                                          <img
+                                            src={getDomainInfo(items).icon}
+                                            alt='Logo'
+                                            class='w-12 h-12 mr-4'
+                                          />
+                                          <div>
+                                            <p class='text-gray-700 font-bold text-lg'>
+                                            {getDomainInfo(items).domain}
+                                            </p>
+                                            <p class='text-sm text-gray-500 group-hover:text-gray-700'>
+                                              Visit this website
+                                            </p>
+                                          </div>
+                                        </a> */}
+                                      </>
+                                    );
+                                  })}
                                 </div>
                               )}
                               <p className='text-[14px] font-medium whitespace-pre-wrap overflow-auto'>
-                                { <BoldText text={(item?.conversation?.response?.choices &&
-                                  item?.conversation?.response?.choices[0]
-                                    ?.message?.content) ||
-                                  item?.conversation?.answer} /> 
-                                  }
-
+                                {
+                                  <BoldText
+                                    text={
+                                      (item?.conversation?.response?.choices &&
+                                        item?.conversation?.response?.choices[0]
+                                          ?.message?.content) ||
+                                      item?.conversation?.answer
+                                    }
+                                  />
+                                }
                               </p>
                             </div>
                           </div>

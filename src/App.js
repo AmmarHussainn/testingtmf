@@ -39,8 +39,15 @@ function App() {
   // const navigate = useNavigate()
   const isAuthenticated = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-    if (user?.userId && user?.token) return true;
+    if (user?.userId && user?.token) return true
     else return false;
+  };
+  const CheckLogin = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user?.userId && user?.token){ 
+     return <Navigate to={"/"+user?.userId +"/dashboard/home"} />
+    }
+   else return <Login />
   };
   const router = createBrowserRouter([
     {
@@ -157,7 +164,7 @@ function App() {
         <Route path='/productfour' element={<ProductFour />} />
         <Route path='/productfive' element={<ProductFive />} />
         <Route path='/productsix' element={<ProductSix />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/login' element={ <CheckLogin />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/resetpassword-one' element={<ResetPassword_One />} />
         <Route path='/otp' element={<OTP />} />
