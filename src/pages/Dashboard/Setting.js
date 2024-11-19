@@ -124,7 +124,7 @@ export const Setting = () => {
     phone: phone || '',
     profilePicture: profilePicture || '',
     newPassword: '',
-    oldPassword: '',
+    confirmPassword : '',
   });
 
   useEffect(() => {
@@ -136,7 +136,7 @@ export const Setting = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await fetch('http://localhost:3000/users/profile', {
+      const response = await fetch('https://tmf-backend.onrender.com/users/profile', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -149,8 +149,6 @@ export const Setting = () => {
           email: data.user.email,
           phone: data.user.phone || '',
           profilePicture: data.user.profilePicture || '',
-          oldPassword: '',
-          newPassword: '',
         });
       }
     } catch (error) {
@@ -196,6 +194,17 @@ export const Setting = () => {
   
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
+  
+    // Validate passwords
+    if (userDetails.newPassword && userDetails.newPassword !== userDetails.confirmPassword) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Password Mismatch',
+        text: 'New Password and Confirm Password do not match. Please try again.',
+        confirmButtonText: 'OK',
+      });
+      return;
+    }
   
     try {
       const response = await fetch('https://tmf-backend.onrender.com/users/profile', {
@@ -254,7 +263,7 @@ export const Setting = () => {
       });
     }
   };
-
+  
   
   return (
     <div className='p-3 h-full overflow-scroll'>
@@ -334,21 +343,24 @@ export const Setting = () => {
         <p className='text-[20px] font-poppins py-3'>Change Password</p>
 
         <div className='flex gap-5 pb-3 items-center'>
-          <div className='w-[24%]'>
-            <TextInput
-              type='password'
-              label='Old Password'
-              value={userDetails.oldPassword}
-              onChange={(e) => setUserDetails({ ...userDetails, oldPassword: e.target.value })}
-              icon={<SvgIcons.Eye />}
-            />
-          </div>
+         
           <div className='w-[24%]'>
             <TextInput
               type='password'
               label='New Password'
               value={userDetails.newPassword}
               onChange={(e) => setUserDetails({ ...userDetails, newPassword: e.target.value })}
+              icon={<SvgIcons.Eye />}
+            />
+          </div>
+
+
+          <div className='w-[24%]'>
+            <TextInput
+              type='password'
+              label='Confirm Password'
+              value={userDetails.confirmPassword}
+              onChange={(e) => setUserDetails({ ...userDetails, confirmPassword: e.target.value })}
               icon={<SvgIcons.Eye />}
             />
           </div>

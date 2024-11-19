@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DropDown from '../../components/DropDown';
 import SvgIcons from '../../components/svg';
 import FormPopup from '../../components/FormPopup';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 export const Dashboard_Home = () => {
   // const [conditions, setConditions] = React.useState('one');
@@ -11,7 +11,7 @@ export const Dashboard_Home = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedService, setSelectedService] = useState('');
   console.log('isPopupOpen',isPopupOpen);
-  
+  const navigate = useNavigate()
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem('user'));
     setUser(user);
@@ -91,6 +91,17 @@ export const Dashboard_Home = () => {
             userCredentials={user}
           />
         )}
+
+<button
+         onClick={()=>{
+          localStorage.removeItem("user");
+          navigate('/login')
+         }}
+         className='text-[12px] text-white font-poppins flex items-center justify-center bg-[#c62631] p-3 px-5 w-[143px] rounded-md cursor-pointer'>
+        Logout
+          {/* <SvgIcons.Logout/>   */}
+        </button>
+       
       </div>
       {/* GREETINGS */}
       <div>
@@ -101,7 +112,7 @@ export const Dashboard_Home = () => {
       {/* BODY */}
       {/* 1 */}
 
-      <div className='pt-10 pb-2 text-[18px] font-roboto'>
+      <div className='pt-10 pb-2 text-[24px] font-roboto'>
         Generate New Videos
       </div>
       <div className='flex flex-wrap gap-5 mt-9 py-3'>
@@ -110,7 +121,7 @@ export const Dashboard_Home = () => {
             <Link
               key={index}
               rel='noopener noreferrer'
-              className='bg-[#5C57C3] flex items-center justify-between p-5 w-[35%] h-[187px] rounded-lg group cursor-pointer'
+              className='bg-[#5C57C3] flex items-center justify-between p-5 w-[30%] h-[157px] rounded-lg group cursor-pointer'
               to={`${window.location.origin}${location.pathname.replace('home','generate')}/${item.path}`}
               target='_blank'
             >
