@@ -14,6 +14,7 @@ export const FoodExportAssistant = () => {
     conversationId: '',
   });
   const [allConversations, setAllConversation] = useState([]);
+  const [username, setUsername] = useState('');
 
   const fetchConversations = (Ids, userId) => {
     setLoader1(true);
@@ -71,6 +72,9 @@ export const FoodExportAssistant = () => {
 
   const onload = () => {
     let userComing = JSON.parse(localStorage.getItem('user'));
+    let  userName = JSON.parse(localStorage.getItem('user'))
+   
+    setUsername(userName?.name)
     console.log('userComing', userComing);
     setUser(userComing);
 
@@ -179,7 +183,7 @@ export const FoodExportAssistant = () => {
           }
           if (!idFounded) {
             let newConv = [...allConversations];
-            newConv.push([
+            newConv.unshift([
               {
                 conversationId: response?.data?.conversationId,
                 conversation: {
@@ -347,7 +351,7 @@ export const FoodExportAssistant = () => {
               : allConversations.map((item, idx) => (
                   <div
                     key={idx}
-                    className={`flex w-[85%] ml-auto mr-auto justify-between items-center gap-2  mt-3 mb-3 p-3 pl-4 pr-4 rounded-xl cursor-pointer hover:bg-slate-50 ${
+                    className={`flex w-[85%] ml-auto mr-auto  items-center gap-2  mt-3 mb-3 p-3 pl-4 pr-4 rounded-xl cursor-pointer hover:bg-slate-50 ${
                       currentConversation?.conversationId ==
                         item[0].conversationId && 'bg-[#EAE9F7]'
                     }`}
@@ -360,7 +364,7 @@ export const FoodExportAssistant = () => {
                           conversation: item,
                         });
                       }}
-                      className='flex gap-3 justify-between hover:font-bold items-center'
+                      className='flex w-[90%] gap-1 items-center'
                     >
                       <div className='w-[18px] h-[16px] '>
                         <img
@@ -408,7 +412,7 @@ export const FoodExportAssistant = () => {
                   alt='User Avatar'
                 />
               </div>
-              <h3 className='font-bold font-Poppins text-[14px]'>Mohsin</h3>
+              <h3 className='font-bold font-Poppins text-[14px]'>{username}</h3>
             </div>
             <div className='w-[34px] h-[34px] cursor-pointer'>
               <img
@@ -605,7 +609,7 @@ export const FoodExportAssistant = () => {
                   setQuestion(e.target.value);
                 }}
                 onKeyDown={handleKeyDown}
-                className='w-[80%] border border-[#E9EDF7] pl-6 pt-4 pb-4 pr-6 text-[14px] rounded-full outline-none'
+                className='w-[80%]  border-slate-300 border-2 pl-6 pt-4 pb-4 pr-6 text-[14px] rounded-full outline-none'
               />
               <div
                 onClick={() => {
@@ -627,8 +631,10 @@ export const FoodExportAssistant = () => {
               </div>
             </div>
             <div className='text-[#718096] text-[12px] ml-auto mr-auto w-fit mt-3'>
+              <p className='mr-[20%] text-center'>
               Free Research Preview. AI may produce inaccurate information about
               people, places, or facts.
+              </p>
             </div>
           </div>
         </div>

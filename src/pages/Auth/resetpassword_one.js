@@ -81,9 +81,9 @@ export const ResetPassword_One = () => {
     </div>
     <div className='w-full flex justify-center'>
       <div className='w-[90%] md:w-[480px] border-[1px] border-black flex flex-col items-center mt-20'>
-        <h2 className='text-[30px] md:text-[38px] font-bold font-poppins py-3'>
+        {/* <h2 className='text-[30px] md:text-[38px] font-bold font-poppins py-3'>
           TMF
-        </h2>
+        </h2> */}
         <h1 className='text-[40px] md:text-[48px] font-bold font-roboto '>
           Reset Password
         </h1>

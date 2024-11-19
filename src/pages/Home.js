@@ -57,6 +57,8 @@ function Home() {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   };
+
+  
   return (
     <div>
       <Header />

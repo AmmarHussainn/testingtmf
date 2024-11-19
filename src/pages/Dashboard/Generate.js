@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React, { useState } from 'react';
 import SvgIcons from '../../components/svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
@@ -7,9 +7,9 @@ export const Generate = () => {
   const navigate = useNavigate();
   const [conditions, setConditions] = React.useState('one');
   const [image, setImage] = useState(null);
-  const [items , setItems] = useState({
-    Name : '',
-    Price : ''
+  const [items, setItems] = useState({
+    Name: '',
+    Price: '',
   });
 
   const handleFileChange = (event) => {
@@ -35,31 +35,31 @@ export const Generate = () => {
       heading: 'Text to Video Creation ',
       description: 'Start from scratch',
       con: 'one',
-      path : 'texttovideo'
+      path: 'texttovideo',
     },
     {
       heading: 'Image To Video',
       description: 'Upload the image and get your video',
       con: 'two',
-      path : 'imagetovideo'
+      path: 'imagetovideo',
     },
     {
       heading: 'Video Menu Generation',
       description: 'Upload product details to get video',
       con: 'three',
-      path : 'videomenugeneration'
+      path: 'videomenugeneration',
     },
     {
       heading: 'Food Export Assistant',
       description: 'Explore the market with AI',
       con: 'four',
-      path : 'foodexportassistant'
+      path: 'foodexportassistant',
     },
   ];
 
-  console.log('Location ',location);
-  console.log('Navigation ',navigate);
-  
+  console.log('Location ', location);
+  console.log('Navigation ', navigate);
+
   return (
     <div className='p-3 h-full overflow-scroll'>
       {/* HEADER */}
@@ -112,33 +112,15 @@ export const Generate = () => {
         })}
       </div> */}
 
-<div className='flex flex-wrap gap-5 mt-9 py-3'>
+      <div className='flex flex-wrap gap-5 mt-9 py-3'>
         {data.map((item, index) => {
           return (
             <Link
               key={index}
-          
-            
-              rel="noopener noreferrer" 
-              
-             
+              rel='noopener noreferrer'
               className='bg-[#5C57C3] flex items-center justify-between p-5 w-[35%] h-[187px] rounded-lg group cursor-pointer'
-         
-
-            // onClick={() => {
-            //   const newUrl = `${window.location.origin}${location.pathname}/${item.path}`;
-            //   console.log("Opening URL:", newUrl);
-            //   const newTab = window.open(newUrl, '_blank');
-            //   if (newTab) {
-            //     newTab.focus();  // Ensure the new tab gets focus
-            //   }
-            // }}
-            to={`${window.location.origin}${location.pathname}/${item.path}`}
-            target='_blank'
-
-            // onClick={() => {
-            //   navigate(item.path);
-            // }}
+              to={`${window.location.origin}${location.pathname}/${item.path}`}
+              target='_blank'
             >
               <div>
                 <h1 className='text-[22px] text-white font-bold font-roboto'>

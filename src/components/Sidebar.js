@@ -27,7 +27,7 @@ const Sidebar = () => {
               <SvgIcons.SHome /> Home
             </NavLink>
           </div>
-          <div className='py-1'>
+          {/* <div className='py-1'>
             <NavLink
               to='recent'
               className={({ isActive }) =>
@@ -52,7 +52,7 @@ const Sidebar = () => {
               <SvgIcons.SGenerate />
               Generate
             </NavLink>
-          </div>
+          </div> */}
         </div>
         <div className='border border-r-0 py-3 border-black border-l-0 border-t-[1px] border-b-[1px]'>
           <div className='py-1'>

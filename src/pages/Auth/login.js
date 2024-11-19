@@ -17,27 +17,6 @@ export const Login = () => {
   useEffect(() => {
     onload();
   }, []);
-
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [error, setError] = useState('');
-  // const handleLogin = async () => {
-  //   try {
-  //     const response = await axios.post('https://tmf-backend.onrender.com/users/login', {
-  //       email : email,
-  //        password : password,
-  //     });
-
-  //     if (response.status === 200) {
-  //       navigate('/');
-  //     } else {
-  //       setError('Login failed. Please try again.');
-  //     }
-  //   } catch (err) {
-  //     setError(err.response?.data?.message || 'Login failed. Please try again.');
-  //   }
-  // };
-
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -70,6 +49,7 @@ export const Login = () => {
             password: values.password,
           }
         );
+        console.log('Response',response)
         if (response.status === 200) {
           setLoader(false);
           localStorage.setItem('user', JSON.stringify(response.data));
@@ -78,10 +58,11 @@ export const Login = () => {
           setErrors({ SyntaxError: 'Login failed. Please try again.' });
         }
       } catch (error) {
+        console.log('error',error)
         setLoader(false);
         setErrors({
           SyntaxError:
-            error.response?.data?.message || 'Login failed. Please try again.',
+            error.response?.data?.message || error.response?.data?.error || 'Login failed. Please try again.',
         });
       }
       setLoader(false);
@@ -98,9 +79,9 @@ export const Login = () => {
 
       <div className='w-full flex justify-center'>
         <div className='w-[90%] md:w-[480px] border-[1px] border-black flex flex-col items-center my-20'>
-          <h2 className='text-[30px] md:text-[38px] font-bold font-poppins py-3'>
+          {/* <h2 className='text-[30px] md:text-[38px] font-bold font-poppins py-3'>
             TMF
-          </h2>
+          </h2> */}
           <h1 className='text-[40px] md:text-[48px] font-bold font-roboto '>
             Welcome!
           </h1>
@@ -110,12 +91,6 @@ export const Login = () => {
 
           <div className='w-[90%] md:w-[80%]'>
             <TextInput
-              //  label='Email*'
-              //  type='text'
-              //  value={email}
-              //  onChange={(e) => setEmail(e.target.value)}
-              //  error={error}
-
               label='Email*'
               type='text'
               value={formik.values.email}
@@ -127,22 +102,19 @@ export const Login = () => {
 
           <div className='w-[90%] md:w-[80%] '>
             <TextInput
-              // label='Password*'
-              // type='password'
-              // value={password}
-              // onChange={(e) => setPassword(e.target.value)}
-              // error={error}
-              // icon={<SvgIcons.Eye />}
-
               label='Password*'
               type='password'
               value={formik.values.password}
               onChange={(e) => formik.setFieldValue('password', e.target.value)}
-              onBlur={formik.handleBlur} // Trigger validation on blur
-              error={formik.touched.password && formik.errors.password} // Show error only if the field was touched
+              onBlur={formik.handleBlur} 
+              error={formik.touched.password && formik.errors.password} 
               icon={<SvgIcons.Eye />}
             />
           </div>
+
+         {formik?.errors?.SyntaxError && <div className='text-[#ff0000]'>
+          {formik?.errors?.SyntaxError}
+          </div>}
 
           <p className='text-[14px] md:text-[16px] flex  font-roboto py-2 pb-5 gap-2'>
             Forgot your password?
@@ -173,7 +145,7 @@ export const Login = () => {
               disabled={!formik.values.email || !formik.values.password}
             />
           </div>
-          <div className='w-[90%] md:w-[80%]'>
+          {/* <div className='w-[90%] md:w-[80%]'>
             <SimpleButton
               text={
                 <div className='flex gap-5'>
@@ -186,7 +158,7 @@ export const Login = () => {
               }}
               disabled={true}
             />
-          </div>
+          </div> */}
 
           <p className='text-[14px] md:text-[16px] flex  font-roboto py-3 pb-5 gap-2'>
             Don't have an account?

@@ -163,9 +163,9 @@ useEffect(()=>{
     </div>
     <div className='w-full flex justify-center '>
       <div className='w-[90%] md:w-[480px] border-[1px] border-black flex flex-col items-center my-20 mt-10'>
-        <h2 className='text-[30px] md:text-[38px] font-bold font-poppins py-3'>
+        {/* <h2 className='text-[30px] md:text-[38px] font-bold font-poppins py-3'>
           TMF
-        </h2>
+        </h2> */}
         <h1 className='text-[40px] md:text-[48px] font-bold font-roboto '>
           Sign Up
         </h1>
@@ -248,7 +248,7 @@ useEffect(()=>{
 
           />
         </div>
-        <div className='w-[90%] md:w-[80%]'>
+        {/* <div className='w-[90%] md:w-[80%]'>
           <SimpleButton
             text={
               <div className='flex gap-5'>
@@ -261,7 +261,7 @@ useEffect(()=>{
             }}
             disabled={true}
           />
-        </div>
+        </div> */}
 
         <p className='text-[14px] md:text-[16px] flex  font-roboto py-3 pb-5 gap-2'>
           Already have an account?
