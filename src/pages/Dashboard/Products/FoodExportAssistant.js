@@ -307,7 +307,7 @@ export const FoodExportAssistant = () => {
       <div className='w-[20%] shadow-[4px_-2px_46px_0px_rgba(0,_0,_0,_0.1)] h-[95%] rounded-xl flex flex-col justify-between'>
         <div>
           <div className='p-3'>
-            <NavLink to='home' className='block w-full font-bold'>
+            <NavLink to={`/${user?.userId}/dashboard/home`} className='block w-full font-bold'>
               <h1 className='font-poppins font-bold text-[38px]'>TMF</h1>
             </NavLink>
           </div>

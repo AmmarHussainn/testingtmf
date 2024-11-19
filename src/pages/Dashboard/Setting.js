@@ -111,6 +111,7 @@ import React, { useState, useEffect } from 'react';
 import SvgIcons from '../../components/svg';
 import { TextInput } from '../../components/TextInput';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export const Setting = () => {
   const userData = JSON.parse(localStorage.getItem('user')) || {};
@@ -157,15 +158,51 @@ export const Setting = () => {
     }
   };
 
+  // const handleProfileUpdate = async (e) => {
+  //   e.preventDefault();
+  
+  //   try {
+  //     const response = await fetch('https://tmf-backend.onrender.com/users/profile', {
+  //       method: 'POST',  
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `Bearer ${token}`, 
+  //       },
+  //       body: JSON.stringify({
+  //         name: userDetails.name,
+  //         userId: userId,
+  //         phone: userDetails.phone,
+  //         profilePicture: userDetails.profilePicture,
+  //         newPassword: userDetails.newPassword,
+  //       }),
+  //     });
+  
+     
+  //     const data = await response.json();
+  //     console.log('data',data);
+      
+  
+  //     if (data.message === 'Profile updated successfully') {
+  //       alert('Profile updated successfully');
+  //       localStorage.setItem('user', JSON.stringify({ ...userData, name: userDetails.name, phone: userDetails.phone, profilePicture: userDetails.profilePicture }));
+  //     } else {
+  //       alert('Error updating profile');
+  //     }
+  //   } catch (error) {
+  //     console.log('Error updating profile:', error);
+  //     alert('There was an error updating your profile. Please check the console for more details.');
+  //   }
+  // };
+  
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
   
     try {
       const response = await fetch('https://tmf-backend.onrender.com/users/profile', {
-        method: 'POST',  
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, 
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
           name: userDetails.name,
@@ -176,22 +213,48 @@ export const Setting = () => {
         }),
       });
   
-     
       const data = await response.json();
-      console.log('data',data);
-      
+      console.log('data', data);
   
       if (data.message === 'Profile updated successfully') {
-        alert('Profile updated successfully');
-        localStorage.setItem('user', JSON.stringify({ ...userData, name: userDetails.name, phone: userDetails.phone, profilePicture: userDetails.profilePicture }));
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Your profile has been updated successfully.',
+          confirmButtonText: 'OK',
+          timer: 3000, // Auto-close after 3 seconds
+          timerProgressBar: true,
+        });
+  
+        localStorage.setItem(
+          'user',
+          JSON.stringify({
+            ...userData,
+            name: userDetails.name,
+            phone: userDetails.phone,
+            profilePicture: userDetails.profilePicture,
+          })
+        );
       } else {
-        alert('Error updating profile');
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Error updating profile. Please try again.',
+          confirmButtonText: 'OK',
+        });
       }
     } catch (error) {
       console.log('Error updating profile:', error);
-      alert('There was an error updating your profile. Please check the console for more details.');
+  
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'There was an error updating your profile. Please try again later.',
+        confirmButtonText: 'OK',
+      });
     }
   };
+
   
   return (
     <div className='p-3 h-full overflow-scroll'>
