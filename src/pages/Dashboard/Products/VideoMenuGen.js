@@ -3,6 +3,9 @@ import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 
 export const VideoMenuGen = () => {
+
+  const user = JSON.parse(localStorage.getItem('user')); 
+
   const [conditions, setConditions] = React.useState('one');
   const [image, setImage] = useState(null);
   const [items , setItems] = useState({
@@ -52,9 +55,9 @@ export const VideoMenuGen = () => {
           <div>
             {' '}
             <div className='p-3'>
-              <NavLink to='home' className={'block w-full font-bold'}>
-                <h1 className='font-poppins font-bold text-[38px]'>TMF</h1>
-              </NavLink>
+            <NavLink to={`/${user?.userId}/dashboard/home`} className='block w-full font-bold'>
+              <h1 className='font-poppins font-bold text-[38px]'>TMF</h1>
+            </NavLink>
             </div>
             <div className='w-[100%] bg-[#E9EDF7] h-[1px]  mt-5'></div>
             <div className='flex w-[80%] justify-start ml-auto mr-auto gap-3 pt-8'>
