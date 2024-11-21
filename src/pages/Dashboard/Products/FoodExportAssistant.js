@@ -99,10 +99,7 @@ export const FoodExportAssistant = () => {
         },
       },
     ];
-    console.log('TEST : ', {
-      conversationId: currentConversation?.conversationId,
-      conversation: newConversation1,
-    });
+  
     setCurrentConversation({
       conversationId: currentConversation?.conversationId,
       conversation: newConversation1,
@@ -139,6 +136,10 @@ export const FoodExportAssistant = () => {
               response?.data?.conversationId,
             ],
             token: user.token,
+            email : user?.email,
+            name  : user?.name,
+            phone : user?.phone ,
+            profilePicture : user?.profilePicture
           };
           localStorage.setItem('user', JSON.stringify(newDataOfUser));
           setUser(newDataOfUser);
