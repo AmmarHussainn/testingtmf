@@ -52,8 +52,7 @@ export const Login = () => {
         if (response.status === 200) {
           setLoader(false);
           localStorage.setItem('user', JSON.stringify(response.data));
-          let user = JSON.parse(localStorage.getItem('user'));
-         
+          let user = await JSON.parse(localStorage.getItem('user'));
           navigate('/' + user.userId + '/dashboard/home');
         } else {
           setErrors({ SyntaxError: 'Login failed. Please try again.' });
