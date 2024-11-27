@@ -1,9 +1,31 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React , {useEffect} from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 export const ImageToVideo = () => {
   const user = JSON.parse(localStorage.getItem('user')); 
+
+
+  const navigate = useNavigate()
+
+
+  const handleTabVisibility = () => {
+    if (document.visibilityState === 'visible') {
+      PerformActionOnTabVisible();
+    } 
+  };
+
+  const PerformActionOnTabVisible = () => {
+    let user =  localStorage.getItem('user');
+    if(!user) navigate("/login")
+  };
+
+  useEffect(() => {
+    document.addEventListener('visibilitychange', handleTabVisibility);
+    return () => {
+      document.removeEventListener('visibilitychange', handleTabVisibility);
+    };
+  }, []);
 
   const questions = [
     {

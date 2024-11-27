@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState  } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SvgIcons from '../../../components/svg';
 import BoldText from '../../../components/BoldText';
 
 export const FoodExportAssistant = () => {
+  const navigate = useNavigate()
   const [user, setUser] = useState(null);
   const [question, setQuestion] = useState('');
   const [loader, setLoader] = useState(false);
@@ -15,7 +16,8 @@ export const FoodExportAssistant = () => {
   });
   const [allConversations, setAllConversation] = useState([]);
   const [username, setUsername] = useState('');
-
+  
+  
   const fetchConversations = (Ids, userId) => {
     setLoader1(true);
     const apiUrl = 'https://tmf-backend.onrender.com/conversation/messages';
@@ -69,21 +71,34 @@ export const FoodExportAssistant = () => {
       });
     // setLoader1(false);
   };
-
   const onload = () => {
     let userComing = JSON.parse(localStorage.getItem('user'));
     let  userName = JSON.parse(localStorage.getItem('user'))
    
     setUsername(userName?.name)
-    console.log('userComing', userComing);
     setUser(userComing);
 
     if (userComing?.conversationIds.length > 0 && allConversations?.length == 0)
       fetchConversations(userComing?.conversationIds, userComing.userId);
   };
 
+  const handleTabVisibility = () => {
+    if (document.visibilityState === 'visible') {
+      PerformActionOnTabVisible();
+    } 
+  };
+
+  const PerformActionOnTabVisible = () => {
+    let user =  localStorage.getItem('user');
+    if(!user) navigate("/login")
+  };
+
   useEffect(() => {
     onload();
+    document.addEventListener('visibilitychange', handleTabVisibility);
+    return () => {
+      document.removeEventListener('visibilitychange', handleTabVisibility);
+    };
   }, []);
 
   const submitQuestion = async () => {

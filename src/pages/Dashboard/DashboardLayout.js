@@ -10,7 +10,6 @@ export const DashboardLayout = () => {
     ];
 
   useEffect(() => {
-    console.log('navigate', params);
     if(params == "dashboard")
     navigate('home', { replace: true });
   }, [navigate]);

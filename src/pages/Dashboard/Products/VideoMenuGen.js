@@ -1,6 +1,7 @@
-import React from 'react';
+import React , { useEffect} from 'react';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const VideoMenuGen = () => {
 
@@ -12,6 +13,27 @@ export const VideoMenuGen = () => {
     Name : '',
     Price : ''
   });
+
+  const navigate = useNavigate()
+
+
+  const handleTabVisibility = () => {
+    if (document.visibilityState === 'visible') {
+      PerformActionOnTabVisible();
+    } 
+  };
+
+  const PerformActionOnTabVisible = () => {
+    let user =  localStorage.getItem('user');
+    if(!user) navigate("/login")
+  };
+
+  useEffect(() => {
+    document.addEventListener('visibilitychange', handleTabVisibility);
+    return () => {
+      document.removeEventListener('visibilitychange', handleTabVisibility);
+    };
+  }, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];

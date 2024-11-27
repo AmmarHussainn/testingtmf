@@ -1,31 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState  } from 'react';
 import DropDown from '../../components/DropDown';
 import SvgIcons from '../../components/svg';
 import FormPopup from '../../components/FormPopup';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-
 export const Dashboard_Home = () => {
-  // const [conditions, setConditions] = React.useState('one');
   const location = useLocation();
   const [user, setUser] = useState('');
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedService, setSelectedService] = useState('');
-  console.log('isPopupOpen',isPopupOpen);
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem('user'));
     setUser(user);
   }, []);
-
   const handleMenuItemClick = (service) => {
-    console.log(`Selected service: ${service}`);
+    // console.log(`Selected service: ${service}`);
     setSelectedService(service);
-    setIsPopupOpen(false)
-    setIsPopupOpen(true); 
+    setIsPopupOpen(false);
+    setIsPopupOpen(true);
   };
 
   const handleButtonClick = () => {
-    console.log('Dropdown button clicked');
+    // console.log('Dropdown button clicked');
   };
 
   const handleFormSubmit = async (data) => {
@@ -92,20 +89,23 @@ export const Dashboard_Home = () => {
           />
         )}
 
-<button
-         onClick={()=>{
-          localStorage.removeItem("user");
-          navigate('/login')
-         }}
-         className='text-[12px] text-white font-poppins flex items-center justify-center bg-[#c62631] p-3 px-5 w-[143px] rounded-md cursor-pointer'>
-        Logout
+        <button
+          onClick={() => {
+            localStorage.removeItem('user');
+            navigate('/login');
+           
+          }}
+          className='text-[12px] text-white font-poppins flex items-center justify-center bg-[#c62631] p-3 px-5 w-[143px] rounded-md cursor-pointer'
+        >
+          Logout
           {/* <SvgIcons.Logout/>   */}
         </button>
-       
       </div>
       {/* GREETINGS */}
       <div>
-        <h1 className='font-bold font-roboto text-[38px]'>Hello, {user?.name}</h1>
+        <h1 className='font-bold font-roboto text-[38px]'>
+          Hello, {user?.name}
+        </h1>
         <h3 className='font-poppins text-[24px]'>Good to see you again</h3>
       </div>
 
@@ -122,7 +122,10 @@ export const Dashboard_Home = () => {
               key={index}
               rel='noopener noreferrer'
               className='bg-[#5C57C3] flex items-center justify-between p-5 w-[30%] h-[157px] rounded-lg group cursor-pointer'
-              to={`${window.location.origin}${location.pathname.replace('home','generate')}/${item.path}`}
+              to={`${window.location.origin}${location.pathname.replace(
+                'home',
+                'generate'
+              )}/${item.path}`}
               target='_blank'
             >
               <div>

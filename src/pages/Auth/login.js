@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { TextInput } from '../../components/TextInput';
 import SvgIcons from '../../components/svg';
 import { SimpleButton } from '../../components/SimpleButton';
@@ -49,11 +49,12 @@ export const Login = () => {
             password: values.password,
           }
         );
-        console.log('Response',response)
         if (response.status === 200) {
           setLoader(false);
           localStorage.setItem('user', JSON.stringify(response.data));
-          navigate('/' + response.data.userId + '/dashboard/home');
+          let user = JSON.parse(localStorage.getItem('user'));
+         
+          navigate('/' + user.userId + '/dashboard/home');
         } else {
           setErrors({ SyntaxError: 'Login failed. Please try again.' });
         }
